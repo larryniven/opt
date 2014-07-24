@@ -14,6 +14,8 @@ namespace opt {
             }
     
             double step_size = loss / grad_norm_sq;
+
+            std::cout << "[pa] step_size: " << step_size << std::endl;
     
             for (auto& p: loss_grad) {
                 theta(p.first) -= p.second * step_size;
