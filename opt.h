@@ -14,6 +14,16 @@ namespace opt {
         ebt::SparseVector& accu_grad_sq,
         double step_size);
 
+    void adagrad_update(std::vector<double>& theta,
+        std::vector<double> const& loss_grad,
+        std::vector<double>& accu_grad_sq,
+        double step_size);
+
+    void adagrad_update(std::vector<std::vector<double>>& theta,
+        std::vector<std::vector<double>> const& loss_grad,
+        std::vector<std::vector<double>>& accu_grad_sq,
+        double step_size);
+
 }
 
 #endif

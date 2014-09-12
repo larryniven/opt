@@ -40,4 +40,31 @@ namespace opt {
         }
     }
 
+    void adagrad_update(std::vector<double>& theta,
+        std::vector<double> const& loss_grad,
+        std::vector<double>& accu_grad_sq,
+        double step_size)
+    {
+        for (int i = 0; i < loss_grad.size(); ++i) {
+            accu_grad_sq[i] += std::pow(loss_grad[i], 2);
+        }
+    
+        for (int i = 0; i < loss_grad.size(); ++i) {
+            if (accu_grad_sq[i] != 0) {
+                theta[i] -= step_size
+                    / std::sqrt(accu_grad_sq[i]) * loss_grad[i];
+            }
+        }
+    }
+
+    void adagrad_update(std::vector<std::vector<double>>& theta,
+        std::vector<std::vector<double>> const& loss_grad,
+        std::vector<std::vector<double>>& accu_grad_sq,
+        double step_size)
+    {
+        for (int i = 0; i < theta.size(); ++i) {
+            adagrad_update(theta[i], loss_grad[i], accu_grad_sq[i], step_size);
+        }
+    }
+
 }
