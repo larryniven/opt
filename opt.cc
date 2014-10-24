@@ -46,13 +46,13 @@ namespace opt {
         double step_size)
     {
         for (int i = 0; i < loss_grad.size(); ++i) {
-            accu_grad_sq[i] += std::pow(loss_grad[i], 2);
+            accu_grad_sq.at(i) += std::pow(loss_grad.at(i), 2);
         }
     
         for (int i = 0; i < loss_grad.size(); ++i) {
-            if (accu_grad_sq[i] != 0) {
-                theta[i] -= step_size
-                    / std::sqrt(accu_grad_sq[i]) * loss_grad[i];
+            if (accu_grad_sq.at(i) != 0) {
+                theta.at(i) -= step_size
+                    / std::sqrt(accu_grad_sq.at(i)) * loss_grad.at(i);
             }
         }
     }
@@ -63,7 +63,7 @@ namespace opt {
         double step_size)
     {
         for (int i = 0; i < theta.size(); ++i) {
-            adagrad_update(theta[i], loss_grad[i], accu_grad_sq[i], step_size);
+            adagrad_update(theta.at(i), loss_grad.at(i), accu_grad_sq.at(i), step_size);
         }
     }
 
