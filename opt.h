@@ -13,15 +13,25 @@ namespace opt {
         std::vector<double> const& grad,
         double step_size);
 
+    void const_step_update(std::vector<std::vector<double>>& theta,
+        std::vector<std::vector<double>> const& grad,
+        double step_size);
+
     void const_step_update_momentum(ebt::SparseVector& theta,
-        ebt::SparseVector& update,
         ebt::SparseVector const& grad,
+        ebt::SparseVector& update,
         double momentum,
         double step_size);
 
     void const_step_update_momentum(std::vector<double>& theta,
-        std::vector<double>& update,
         std::vector<double> const& grad,
+        std::vector<double>& update,
+        double momentum,
+        double step_size);
+
+    void const_step_update_momentum(std::vector<std::vector<double>>& theta,
+        std::vector<std::vector<double>> const& grad,
+        std::vector<std::vector<double>>& update,
         double momentum,
         double step_size);
 
