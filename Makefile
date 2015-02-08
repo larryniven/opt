@@ -1,6 +1,6 @@
 EBT = ../ebt
 
-CXXFLAGS += -std=c++11 -I $(EBT)
+CXXFLAGS += -std=c++11 -I ../
 AR = gcc-ar
 
 obj = opt.o

@@ -1,7 +1,7 @@
 #ifndef OPT_H
 #define OPT_H
 
-#include "ebt.h"
+#include "ebt/ebt.h"
 
 namespace opt {
 
