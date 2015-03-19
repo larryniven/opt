@@ -159,7 +159,7 @@ namespace opt {
         std::vector<std::vector<double>>& accu_grad_sq,
         double step_size)
     {
-        for (int i = 0; i < theta.size(); ++i) {
+        for (int i = 0; i < loss_grad.size(); ++i) {
             adagrad_update(theta.at(i), loss_grad.at(i), accu_grad_sq.at(i), step_size);
         }
     }
