@@ -53,10 +53,20 @@ namespace opt {
         std::vector<double>& accu_grad_sq,
         double step_size);
 
+    void adagrad_update(std::vector<float>& theta,
+        std::vector<float> const& loss_grad,
+        std::vector<float>& accu_grad_sq,
+        float step_size);
+
     void adagrad_update(std::vector<std::vector<double>>& theta,
         std::vector<std::vector<double>> const& loss_grad,
         std::vector<std::vector<double>>& accu_grad_sq,
         double step_size);
+
+    void adagrad_update(std::vector<std::vector<float>>& theta,
+        std::vector<std::vector<float>> const& loss_grad,
+        std::vector<std::vector<float>>& accu_grad_sq,
+        float step_size);
 
 }
 
