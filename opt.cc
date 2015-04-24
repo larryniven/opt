@@ -142,14 +142,19 @@ namespace opt {
         std::vector<double>& accu_grad_sq,
         double step_size)
     {
-        for (int i = 0; i < loss_grad.size(); ++i) {
-            accu_grad_sq.at(i) += std::pow(loss_grad.at(i), 2);
+        int size = loss_grad.size();
+        double* accu_grad_sq_data = accu_grad_sq.data();
+        double const* loss_grad_data = loss_grad.data();
+        double* theta_data = theta.data();
+
+        for (int i = 0; i < size; ++i) {
+            accu_grad_sq_data[i] += std::pow(loss_grad_data[i], 2);
         }
     
-        for (int i = 0; i < loss_grad.size(); ++i) {
-            if (accu_grad_sq.at(i) != 0) {
-                theta.at(i) -= step_size
-                    / std::sqrt(accu_grad_sq.at(i)) * loss_grad.at(i);
+        for (int i = 0; i < size; ++i) {
+            if (accu_grad_sq_data[i] != 0) {
+                theta_data[i] -= loss_grad_data[i] * step_size
+                    / std::sqrt(accu_grad_sq_data[i]);
             }
         }
     }
@@ -159,14 +164,19 @@ namespace opt {
         std::vector<float>& accu_grad_sq,
         float step_size)
     {
-        for (int i = 0; i < loss_grad.size(); ++i) {
-            accu_grad_sq.at(i) += std::pow(loss_grad.at(i), 2);
+        int size = loss_grad.size();
+        float* accu_grad_sq_data = accu_grad_sq.data();
+        float const* loss_grad_data = loss_grad.data();
+        float* theta_data = theta.data();
+
+        for (int i = 0; i < size; ++i) {
+            accu_grad_sq_data[i] += std::pow(loss_grad_data[i], 2);
         }
     
-        for (int i = 0; i < loss_grad.size(); ++i) {
-            if (accu_grad_sq.at(i) != 0) {
-                theta.at(i) -= step_size
-                    / std::sqrt(accu_grad_sq.at(i)) * loss_grad.at(i);
+        for (int i = 0; i < size; ++i) {
+            if (accu_grad_sq_data[i] != 0) {
+                theta_data[i] -= loss_grad_data[i] * step_size
+                    / std::sqrt(accu_grad_sq_data[i]);
             }
         }
     }
