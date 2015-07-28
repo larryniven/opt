@@ -130,7 +130,7 @@ namespace opt {
         }
     
         for (auto& p: loss_grad) {
-            if (accu_grad_sq(p.first) != 0) {
+            if (accu_grad_sq(p.first) > 0) {
                 theta(p.first) -= step_size
                     / std::sqrt(accu_grad_sq(p.first)) * p.second;
             }
@@ -152,7 +152,7 @@ namespace opt {
         }
     
         for (int i = 0; i < size; ++i) {
-            if (accu_grad_sq_data[i] != 0) {
+            if (accu_grad_sq_data[i] > 0) {
                 theta_data[i] -= loss_grad_data[i] * step_size
                     / std::sqrt(accu_grad_sq_data[i]);
             }
@@ -174,7 +174,7 @@ namespace opt {
         }
     
         for (int i = 0; i < size; ++i) {
-            if (accu_grad_sq_data[i] != 0) {
+            if (accu_grad_sq_data[i] > 0) {
                 theta_data[i] -= loss_grad_data[i] * step_size
                     / std::sqrt(accu_grad_sq_data[i]);
             }
