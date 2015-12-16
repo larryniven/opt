@@ -2,6 +2,7 @@
 #define OPT_H
 
 #include "ebt/ebt.h"
+#include "la/la.h"
 
 namespace opt {
 
@@ -46,6 +47,11 @@ namespace opt {
     void adagrad_update(ebt::SparseVector& theta,
         ebt::SparseVector const& loss_grad,
         ebt::SparseVector& accu_grad_sq,
+        double step_size);
+
+    void adagrad_update(la::vector<double>& theta,
+        la::vector<double> const& loss_grad,
+        la::vector<double>& accu_grad_sq,
         double step_size);
 
     void adagrad_update(std::vector<double>& theta,

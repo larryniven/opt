@@ -159,6 +159,28 @@ namespace opt {
         }
     }
 
+    void adagrad_update(la::vector<double>& theta,
+        la::vector<double> const& loss_grad,
+        la::vector<double>& accu_grad_sq,
+        double step_size)
+    {
+        int size = loss_grad.size();
+        double* accu_grad_sq_data = accu_grad_sq.data();
+        double const* loss_grad_data = loss_grad.data();
+        double* theta_data = theta.data();
+
+        for (int i = 0; i < size; ++i) {
+            accu_grad_sq_data[i] += std::pow(loss_grad_data[i], 2);
+        }
+    
+        for (int i = 0; i < size; ++i) {
+            if (accu_grad_sq_data[i] > 0) {
+                theta_data[i] -= loss_grad_data[i] * step_size
+                    / std::sqrt(accu_grad_sq_data[i]);
+            }
+        }
+    }
+
     void adagrad_update(std::vector<float>& theta,
         std::vector<float> const& loss_grad,
         std::vector<float>& accu_grad_sq,
