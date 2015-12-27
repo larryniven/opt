@@ -54,6 +54,11 @@ namespace opt {
         la::vector<double>& accu_grad_sq,
         double step_size);
 
+    void adagrad_update(la::matrix<double>& theta,
+        la::matrix<double> const& loss_grad,
+        la::matrix<double>& accu_grad_sq,
+        double step_size);
+
     void adagrad_update(std::vector<double>& theta,
         std::vector<double> const& loss_grad,
         std::vector<double>& accu_grad_sq,
