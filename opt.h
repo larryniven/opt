@@ -79,6 +79,18 @@ namespace opt {
         std::vector<std::vector<float>>& accu_grad_sq,
         float step_size);
 
+    void adam_update(la::vector<double>& theta,
+        la::vector<double> const& loss_grad,
+        la::vector<double>& first_moment,
+        la::vector<double>& second_moment,
+        double time, double alpha, double beta1, double beta2);
+
+    void adam_update(la::matrix<double>& theta,
+        la::matrix<double> const& loss_grad,
+        la::matrix<double>& first_moment,
+        la::matrix<double>& second_moment,
+        double time, double alpha, double beta1, double beta2);
+
 }
 
 #endif
