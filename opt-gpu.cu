@@ -27,9 +27,9 @@ namespace opt {
             }
         };
 
-        void adagrad_update(la::gpu::vector<double>& theta,
-            la::gpu::vector<double> const& loss_grad,
-            la::gpu::vector<double>& accu_grad_sq,
+        void adagrad_update(la::gpu::vector_like<double>& theta,
+            la::gpu::vector_like<double> const& loss_grad,
+            la::gpu::vector_like<double>& accu_grad_sq,
             double step_size)
         {
             thrust::for_each(
@@ -44,9 +44,9 @@ namespace opt {
                 iadagrad_update_op { step_size });
         }
 
-        void adagrad_update(la::gpu::matrix<double>& theta,
-            la::gpu::matrix<double> const& loss_grad,
-            la::gpu::matrix<double>& accu_grad_sq,
+        void adagrad_update(la::gpu::matrix_like<double>& theta,
+            la::gpu::matrix_like<double> const& loss_grad,
+            la::gpu::matrix_like<double>& accu_grad_sq,
             double step_size)
         {
             unsigned int size = theta.rows() * theta.cols();
@@ -88,10 +88,10 @@ namespace opt {
             }
         };
 
-        void adam_update(la::gpu::vector<double>& theta,
-            la::gpu::vector<double> const& loss_grad,
-            la::gpu::vector<double>& first_moment,
-            la::gpu::vector<double>& second_moment,
+        void adam_update(la::gpu::vector_like<double>& theta,
+            la::gpu::vector_like<double> const& loss_grad,
+            la::gpu::vector_like<double>& first_moment,
+            la::gpu::vector_like<double>& second_moment,
             double time, double alpha, double beta1, double beta2)
         {
             thrust::for_each(
@@ -108,10 +108,10 @@ namespace opt {
                 iadam_update_op { time, alpha, beta1, beta2, 1 - pow(beta1, time), 1 - pow(beta2, time) });
         }
 
-        void adam_update(la::gpu::matrix<double>& theta,
-            la::gpu::matrix<double> const& loss_grad,
-            la::gpu::matrix<double>& first_moment,
-            la::gpu::matrix<double>& second_moment,
+        void adam_update(la::gpu::matrix_like<double>& theta,
+            la::gpu::matrix_like<double> const& loss_grad,
+            la::gpu::matrix_like<double>& first_moment,
+            la::gpu::matrix_like<double>& second_moment,
             double time, double alpha, double beta1, double beta2)
         {
             unsigned int size = theta.rows() * theta.cols();

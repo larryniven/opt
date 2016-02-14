@@ -49,14 +49,14 @@ namespace opt {
         ebt::SparseVector& accu_grad_sq,
         double step_size);
 
-    void adagrad_update(la::vector<double>& theta,
-        la::vector<double> const& loss_grad,
-        la::vector<double>& accu_grad_sq,
+    void adagrad_update(la::vector_like<double>& theta,
+        la::vector_like<double> const& loss_grad,
+        la::vector_like<double>& accu_grad_sq,
         double step_size);
 
-    void adagrad_update(la::matrix<double>& theta,
-        la::matrix<double> const& loss_grad,
-        la::matrix<double>& accu_grad_sq,
+    void adagrad_update(la::matrix_like<double>& theta,
+        la::matrix_like<double> const& loss_grad,
+        la::matrix_like<double>& accu_grad_sq,
         double step_size);
 
     void adagrad_update(std::vector<double>& theta,
@@ -79,16 +79,16 @@ namespace opt {
         std::vector<std::vector<float>>& accu_grad_sq,
         float step_size);
 
-    void adam_update(la::vector<double>& theta,
-        la::vector<double> const& loss_grad,
-        la::vector<double>& first_moment,
-        la::vector<double>& second_moment,
+    void adam_update(la::vector_like<double>& theta,
+        la::vector_like<double> const& loss_grad,
+        la::vector_like<double>& first_moment,
+        la::vector_like<double>& second_moment,
         double time, double alpha, double beta1, double beta2);
 
-    void adam_update(la::matrix<double>& theta,
-        la::matrix<double> const& loss_grad,
-        la::matrix<double>& first_moment,
-        la::matrix<double>& second_moment,
+    void adam_update(la::matrix_like<double>& theta,
+        la::matrix_like<double> const& loss_grad,
+        la::matrix_like<double>& first_moment,
+        la::matrix_like<double>& second_moment,
         double time, double alpha, double beta1, double beta2);
 
 }
