@@ -7,6 +7,18 @@ namespace opt {
 
     namespace gpu {
 
+        void const_step_update_momentum(la::gpu::vector_like<double>& theta,
+            la::gpu::vector_like<double> const& loss_grad,
+            la::gpu::vector_like<double>& update,
+            double momentum,
+            double step_size);
+
+        void const_step_update_momentum(la::gpu::matrix_like<double>& theta,
+            la::gpu::matrix_like<double> const& loss_grad,
+            la::gpu::matrix_like<double>& update,
+            double momentum,
+            double step_size);
+
         void adagrad_update(la::gpu::vector_like<double>& theta,
             la::gpu::vector_like<double> const& loss_grad,
             la::gpu::vector_like<double>& accu_grad_sq,

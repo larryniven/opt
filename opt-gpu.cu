@@ -7,6 +7,61 @@ namespace opt {
 
     namespace gpu {
 
+        struct iconst_step_update_momentum_op {
+            double momentum;
+            double step_size;
+
+            template <class T>
+            __host__ __device__
+            void operator()(T t) const
+            {
+                auto& theta = thrust::get<0>(t);
+                auto& loss_grad = thrust::get<1>(t);
+                auto& update = thrust::get<2>(t);
+
+                update = update * momentum + loss_grad * (1 - momentum);
+                theta -= step_size * update;
+            }
+        };
+
+        void const_step_update_momentum(la::gpu::vector_like<double>& theta,
+            la::gpu::vector_like<double> const& loss_grad,
+            la::gpu::vector_like<double>& update,
+            double momentum,
+            double step_size)
+        {
+            thrust::for_each(
+                thrust::make_zip_iterator(thrust::make_tuple(
+                    thrust::device_ptr<double>(theta.begin()),
+                    thrust::device_ptr<double const>(loss_grad.begin()),
+                    thrust::device_ptr<double>(update.begin()))),
+                thrust::make_zip_iterator(thrust::make_tuple(
+                    thrust::device_ptr<double>(theta.end()),
+                    thrust::device_ptr<double const>(loss_grad.end()),
+                    thrust::device_ptr<double>(update.end()))),
+                iconst_step_update_momentum_op { momentum, step_size });
+        }
+
+        void const_step_update_momentum(la::gpu::matrix_like<double>& theta,
+            la::gpu::matrix_like<double> const& loss_grad,
+            la::gpu::matrix_like<double>& update,
+            double momentum,
+            double step_size)
+        {
+            unsigned int size = theta.rows() * theta.cols();
+
+            thrust::for_each(
+                thrust::make_zip_iterator(thrust::make_tuple(
+                    thrust::device_ptr<double>(theta.data()),
+                    thrust::device_ptr<double const>(loss_grad.data()),
+                    thrust::device_ptr<double>(update.data()))),
+                thrust::make_zip_iterator(thrust::make_tuple(
+                    thrust::device_ptr<double>(theta.data() + size),
+                    thrust::device_ptr<double const>(loss_grad.data() + size),
+                    thrust::device_ptr<double>(update.data() + size))),
+                iconst_step_update_momentum_op { momentum, step_size });
+        }
+
         struct iadagrad_update_op {
             double step_size;
 
@@ -105,7 +160,8 @@ namespace opt {
                     thrust::device_ptr<double const>(loss_grad.end()),
                     thrust::device_ptr<double>(first_moment.end()),
                     thrust::device_ptr<double>(second_moment.end()))),
-                iadam_update_op { time, alpha, beta1, beta2, 1 - pow(beta1, time), 1 - pow(beta2, time) });
+                iadam_update_op { time, alpha, beta1, beta2, 1 - pow(beta1, time),
+                    1 - pow(beta2, time) });
         }
 
         void adam_update(la::gpu::matrix_like<double>& theta,
@@ -127,7 +183,8 @@ namespace opt {
                     thrust::device_ptr<double const>(loss_grad.data() + size),
                     thrust::device_ptr<double>(first_moment.data() + size),
                     thrust::device_ptr<double>(second_moment.data() + size))),
-                iadam_update_op { time, alpha, beta1, beta2, 1 - pow(beta1, time), 1 - pow(beta2, time) });
+                iadam_update_op { time, alpha, beta1, beta2, 1 - pow(beta1, time),
+                    1 - pow(beta2, time) });
         }
 
     }

@@ -42,6 +42,12 @@ namespace opt {
         double momentum,
         double step_size);
 
+    void const_step_update_momentum(la::matrix_like<double>& theta,
+        la::matrix_like<double> const& grad,
+        la::matrix_like<double>& update,
+        double momentum,
+        double step_size);
+
     void pa_update(ebt::SparseVector& theta,
         ebt::SparseVector const& loss_grad,
         double loss);
