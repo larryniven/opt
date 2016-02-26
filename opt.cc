@@ -86,7 +86,7 @@ namespace opt {
     {
         la::imul(update, momentum);
         la::iadd(update, la::mul(grad, 1 - momentum));
-        la::iadd(theta, la::mul(update, step_size));
+        la::isub(theta, la::mul(update, step_size));
     }
 
     void const_step_update_momentum(la::matrix_like<double>& theta,
@@ -97,7 +97,7 @@ namespace opt {
     {
         la::imul(update, momentum);
         la::iadd(update, la::mul(grad, 1 - momentum));
-        la::iadd(theta, la::mul(update, step_size));
+        la::isub(theta, la::mul(update, step_size));
     }
 
     void pa_update(ebt::SparseVector& theta,
