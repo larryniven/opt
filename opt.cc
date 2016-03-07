@@ -267,6 +267,54 @@ namespace opt {
         }
     }
 
+    void rmsprop_update(la::vector_like<double>& theta,
+        la::vector_like<double> const& loss_grad,
+        la::vector_like<double>& accu_grad_sq,
+        double decay,
+        double step_size)
+    {
+        int size = loss_grad.size();
+        double* accu_grad_sq_data = accu_grad_sq.data();
+        double const* loss_grad_data = loss_grad.data();
+        double* theta_data = theta.data();
+
+        for (int i = 0; i < size; ++i) {
+            accu_grad_sq_data[i] = decay * accu_grad_sq_data[i]
+                + (1 - decay) * std::pow(loss_grad_data[i], 2);
+        }
+
+        for (int i = 0; i < size; ++i) {
+            if (accu_grad_sq_data[i] > 0) {
+                theta_data[i] -= loss_grad_data[i] * step_size
+                    / std::sqrt(accu_grad_sq_data[i]);
+            }
+        }
+    }
+
+    void rmsprop_update(la::matrix_like<double>& theta,
+        la::matrix_like<double> const& loss_grad,
+        la::matrix_like<double>& accu_grad_sq,
+        double decay,
+        double step_size)
+    {
+        int size = loss_grad.rows() * loss_grad.cols();
+        double* accu_grad_sq_data = accu_grad_sq.data();
+        double const* loss_grad_data = loss_grad.data();
+        double* theta_data = theta.data();
+
+        for (int i = 0; i < size; ++i) {
+            accu_grad_sq_data[i] = decay * accu_grad_sq_data[i]
+                + (1 - decay) * std::pow(loss_grad_data[i], 2);
+        }
+
+        for (int i = 0; i < size; ++i) {
+            if (accu_grad_sq_data[i] > 0) {
+                theta_data[i] -= loss_grad_data[i] * step_size
+                    / std::sqrt(accu_grad_sq_data[i]);
+            }
+        }
+    }
+
     void adam_update(la::vector_like<double>& theta,
         la::vector_like<double> const& loss_grad,
         la::vector_like<double>& first_moment,

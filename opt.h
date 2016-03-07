@@ -91,6 +91,18 @@ namespace opt {
         std::vector<std::vector<float>>& accu_grad_sq,
         float step_size);
 
+    void rmsprop_update(la::vector_like<double>& theta,
+        la::vector_like<double> const& loss_grad,
+        la::vector_like<double>& accu_grad_sq,
+        double decay,
+        double step_size);
+
+    void rmsprop_update(la::matrix_like<double>& theta,
+        la::matrix_like<double> const& loss_grad,
+        la::matrix_like<double>& accu_grad_sq,
+        double decay,
+        double step_size);
+
     void adam_update(la::vector_like<double>& theta,
         la::vector_like<double> const& loss_grad,
         la::vector_like<double>& first_moment,
