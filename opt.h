@@ -18,6 +18,14 @@ namespace opt {
         std::vector<std::vector<double>> const& grad,
         double step_size);
 
+    void const_step_update(la::vector_like<double>& theta,
+        la::vector_like<double> const& grad,
+        double step_size);
+
+    void const_step_update(la::matrix_like<double>& theta,
+        la::matrix_like<double> const& grad,
+        double step_size);
+
     void const_step_update_momentum(ebt::SparseVector& theta,
         ebt::SparseVector const& grad,
         ebt::SparseVector& update,

@@ -29,6 +29,26 @@ namespace opt {
         }
     }
 
+    void const_step_update(la::vector_like<double>& theta,
+        la::vector_like<double> const& grad,
+        double step_size)
+    {
+        for (int i = 0; i < theta.size(); ++i) {
+            theta(i) -= grad(i) * step_size;
+        }
+    }
+
+    void const_step_update(la::matrix_like<double>& theta,
+        la::matrix_like<double> const& grad,
+        double step_size)
+    {
+        for (int i = 0; i < theta.rows(); ++i) {
+            for (int j = 0; j < theta.cols(); ++j) {
+                theta(i, j) -= grad(i, j) * step_size;
+            }
+        }
+    }
+
     void const_step_update_momentum(ebt::SparseVector& theta,
         ebt::SparseVector const& grad,
         ebt::SparseVector& update,
