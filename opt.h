@@ -26,6 +26,10 @@ namespace opt {
         la::matrix_like<double> const& grad,
         double step_size);
 
+    void const_step_update(la::tensor_like<double>& theta,
+        la::tensor_like<double> const& grad,
+        double step_size);
+
     void const_step_update_momentum(ebt::SparseVector& theta,
         ebt::SparseVector const& grad,
         ebt::SparseVector& update,
@@ -56,6 +60,12 @@ namespace opt {
         double momentum,
         double step_size);
 
+    void const_step_update_momentum(la::tensor_like<double>& theta,
+        la::tensor_like<double> const& grad,
+        la::tensor_like<double>& update,
+        double momentum,
+        double step_size);
+
     void pa_update(ebt::SparseVector& theta,
         ebt::SparseVector const& loss_grad,
         double loss);
@@ -77,6 +87,11 @@ namespace opt {
     void adagrad_update(la::matrix_like<double>& theta,
         la::matrix_like<double> const& loss_grad,
         la::matrix_like<double>& accu_grad_sq,
+        double step_size);
+
+    void adagrad_update(la::tensor_like<double>& theta,
+        la::tensor_like<double> const& loss_grad,
+        la::tensor_like<double>& accu_grad_sq,
         double step_size);
 
     void adagrad_update(std::vector<double>& theta,
@@ -111,6 +126,12 @@ namespace opt {
         double decay,
         double step_size);
 
+    void rmsprop_update(la::tensor_like<double>& theta,
+        la::tensor_like<double> const& loss_grad,
+        la::tensor_like<double>& accu_grad_sq,
+        double decay,
+        double step_size);
+
     void adam_update(la::vector_like<double>& theta,
         la::vector_like<double> const& loss_grad,
         la::vector_like<double>& first_moment,
@@ -121,6 +142,12 @@ namespace opt {
         la::matrix_like<double> const& loss_grad,
         la::matrix_like<double>& first_moment,
         la::matrix_like<double>& second_moment,
+        double time, double alpha, double beta1, double beta2);
+
+    void adam_update(la::tensor_like<double>& theta,
+        la::tensor_like<double> const& loss_grad,
+        la::tensor_like<double>& first_moment,
+        la::tensor_like<double>& second_moment,
         double time, double alpha, double beta1, double beta2);
 
 }
