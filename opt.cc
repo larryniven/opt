@@ -269,9 +269,8 @@ namespace opt {
         la::tensor_like<double>& accu_grad_sq,
         double step_size)
     {
-        la::weak_vector<double> theta_vec = theta.as_vector();
-        la::weak_vector<double> accu_grad_sq_vec = theta.as_vector();
-        adagrad_update(theta_vec, loss_grad.as_vector(), accu_grad_sq_vec, step_size);
+        adagrad_update(theta.as_vector(), loss_grad.as_vector(),
+            accu_grad_sq.as_vector(), step_size);
     }
 
     void adagrad_update(std::vector<float>& theta,
