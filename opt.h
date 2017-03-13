@@ -136,19 +136,19 @@ namespace opt {
         la::vector_like<double> const& loss_grad,
         la::vector_like<double>& first_moment,
         la::vector_like<double>& second_moment,
-        double time, double alpha, double beta1, double beta2);
+        int& time, double alpha, double beta1, double beta2);
 
     void adam_update(la::matrix_like<double>& theta,
         la::matrix_like<double> const& loss_grad,
         la::matrix_like<double>& first_moment,
         la::matrix_like<double>& second_moment,
-        double time, double alpha, double beta1, double beta2);
+        int& time, double alpha, double beta1, double beta2);
 
     void adam_update(la::tensor_like<double>& theta,
         la::tensor_like<double> const& loss_grad,
         la::tensor_like<double>& first_moment,
         la::tensor_like<double>& second_moment,
-        double time, double alpha, double beta1, double beta2);
+        int& time, double alpha, double beta1, double beta2);
 
 }
 

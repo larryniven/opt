@@ -378,7 +378,7 @@ namespace opt {
         la::vector_like<double> const& loss_grad,
         la::vector_like<double>& first_moment,
         la::vector_like<double>& second_moment,
-        double time, double alpha, double beta1, double beta2)
+        int& time, double alpha, double beta1, double beta2)
     {
         int size = theta.size();
         double *theta_data = theta.data();
@@ -396,20 +396,22 @@ namespace opt {
                 + std::pow(loss_grad_data[i], 2) * (1 - beta2);
         }
 
-        double b1 = 1 - std::pow(beta1, time);
-        double b2 = 1 - std::pow(beta2, time);
+        double b1 = 1 - std::pow(beta1, time + 1);
+        double b2 = 1 - std::pow(beta2, time + 1);
 
         for (int i = 0; i < size; ++i) {
             theta_data[i] -= alpha * first_moment_data[i] / b1
                 / (std::sqrt(second_moment_data[i] / b2) + 1e-8);
         }
+
+        ++time;
     }
 
     void adam_update(la::matrix_like<double>& theta,
         la::matrix_like<double> const& loss_grad,
         la::matrix_like<double>& first_moment,
         la::matrix_like<double>& second_moment,
-        double time, double alpha, double beta1, double beta2)
+        int& time, double alpha, double beta1, double beta2)
     {
         int size = theta.rows() * theta.cols();
         double *theta_data = theta.data();
@@ -427,20 +429,22 @@ namespace opt {
                 + std::pow(loss_grad_data[i], 2) * (1 - beta2);
         }
 
-        double b1 = 1 - std::pow(beta1, time);
-        double b2 = 1 - std::pow(beta2, time);
+        double b1 = 1 - std::pow(beta1, time + 1);
+        double b2 = 1 - std::pow(beta2, time + 1);
 
         for (int i = 0; i < size; ++i) {
             theta_data[i] -= alpha * first_moment_data[i] / b1
                 / (std::sqrt(second_moment_data[i] / b2) + 1e-8);
         }
+
+        ++time;
     }
 
     void adam_update(la::tensor_like<double>& theta,
         la::tensor_like<double> const& loss_grad,
         la::tensor_like<double>& first_moment,
         la::tensor_like<double>& second_moment,
-        double time, double alpha, double beta1, double beta2)
+        int& time, double alpha, double beta1, double beta2)
     {
         la::weak_vector<double> theta_vec = theta.as_vector();
         la::weak_vector<double> first_moment_vec = first_moment.as_vector();
