@@ -1,4 +1,5 @@
 CXXFLAGS += -std=c++11 -I ../
+NVCCFLAGS += -std=c++11 -I ../
 AR = gcc-ar
 
 obj = opt.o
@@ -20,4 +21,4 @@ liboptgpu.a: $(obj) opt-gpu.o
 	$(AR) rcs $@ $^
 
 opt-gpu.o: opt-gpu.cu
-	nvcc $(CXXFLAGS) -c opt-gpu.cu
+	nvcc $(NVCCFLAGS) -c opt-gpu.cu
