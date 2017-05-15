@@ -29,8 +29,8 @@ namespace opt {
         }
     }
 
-    void const_step_update(la::vector_like<double>& theta,
-        la::vector_like<double> const& grad,
+    void const_step_update(la::cpu::vector_like<double>& theta,
+        la::cpu::vector_like<double> const& grad,
         double step_size)
     {
         for (int i = 0; i < theta.size(); ++i) {
@@ -38,19 +38,19 @@ namespace opt {
         }
     }
 
-    void const_step_update(la::matrix_like<double>& theta,
-        la::matrix_like<double> const& grad,
+    void const_step_update(la::cpu::matrix_like<double>& theta,
+        la::cpu::matrix_like<double> const& grad,
         double step_size)
     {
-        la::weak_vector<double> theta_vec = theta.as_vector();
+        la::cpu::weak_vector<double> theta_vec = theta.as_vector();
         const_step_update(theta_vec, grad.as_vector(), step_size);
     }
 
-    void const_step_update(la::tensor_like<double>& theta,
-        la::tensor_like<double> const& grad,
+    void const_step_update(la::cpu::tensor_like<double>& theta,
+        la::cpu::tensor_like<double> const& grad,
         double step_size)
     {
-        la::weak_vector<double> theta_vec = theta.as_vector();
+        la::cpu::weak_vector<double> theta_vec = theta.as_vector();
         const_step_update(theta_vec, grad.as_vector(), step_size);
     }
 
@@ -103,20 +103,20 @@ namespace opt {
         }
     }
 
-    void const_step_update_momentum(la::vector_like<double>& theta,
-        la::vector_like<double> const& grad,
-        la::vector_like<double>& update,
+    void const_step_update_momentum(la::cpu::vector_like<double>& theta,
+        la::cpu::vector_like<double> const& grad,
+        la::cpu::vector_like<double>& update,
         double momentum,
         double step_size)
     {
-        la::imul(update, momentum);
-        la::axpy(update, 1 - momentum, grad);
-        la::axpy(theta, -step_size, update);
+        la::cpu::imul(update, momentum);
+        la::cpu::axpy(update, 1 - momentum, grad);
+        la::cpu::axpy(theta, -step_size, update);
     }
 
-    void const_step_update_momentum(la::matrix_like<double>& theta,
-        la::matrix_like<double> const& grad,
-        la::matrix_like<double>& update,
+    void const_step_update_momentum(la::cpu::matrix_like<double>& theta,
+        la::cpu::matrix_like<double> const& grad,
+        la::cpu::matrix_like<double>& update,
         double momentum,
         double step_size)
     {
@@ -124,9 +124,9 @@ namespace opt {
             update.as_vector(), momentum, step_size);
     }
 
-    void const_step_update_momentum(la::tensor_like<double>& theta,
-        la::tensor_like<double> const& grad,
-        la::tensor_like<double>& update,
+    void const_step_update_momentum(la::cpu::tensor_like<double>& theta,
+        la::cpu::tensor_like<double> const& grad,
+        la::cpu::tensor_like<double>& update,
         double momentum,
         double step_size)
     {
@@ -215,9 +215,9 @@ namespace opt {
         }
     }
 
-    void adagrad_update(la::vector_like<double>& theta,
-        la::vector_like<double> const& loss_grad,
-        la::vector_like<double>& accu_grad_sq,
+    void adagrad_update(la::cpu::vector_like<double>& theta,
+        la::cpu::vector_like<double> const& loss_grad,
+        la::cpu::vector_like<double>& accu_grad_sq,
         double step_size)
     {
         int size = loss_grad.size();
@@ -237,18 +237,18 @@ namespace opt {
         }
     }
 
-    void adagrad_update(la::matrix_like<double>& theta,
-        la::matrix_like<double> const& loss_grad,
-        la::matrix_like<double>& accu_grad_sq,
+    void adagrad_update(la::cpu::matrix_like<double>& theta,
+        la::cpu::matrix_like<double> const& loss_grad,
+        la::cpu::matrix_like<double>& accu_grad_sq,
         double step_size)
     {
         adagrad_update(theta.as_vector(), loss_grad.as_vector(),
             accu_grad_sq.as_vector(), step_size);
     }
 
-    void adagrad_update(la::tensor_like<double>& theta,
-        la::tensor_like<double> const& loss_grad,
-        la::tensor_like<double>& accu_grad_sq,
+    void adagrad_update(la::cpu::tensor_like<double>& theta,
+        la::cpu::tensor_like<double> const& loss_grad,
+        la::cpu::tensor_like<double>& accu_grad_sq,
         double step_size)
     {
         adagrad_update(theta.as_vector(), loss_grad.as_vector(),
@@ -297,9 +297,9 @@ namespace opt {
         }
     }
 
-    void rmsprop_update(la::vector_like<double>& theta,
-        la::vector_like<double> const& loss_grad,
-        la::vector_like<double>& accu_grad_sq,
+    void rmsprop_update(la::cpu::vector_like<double>& theta,
+        la::cpu::vector_like<double> const& loss_grad,
+        la::cpu::vector_like<double>& accu_grad_sq,
         double decay,
         double step_size)
     {
@@ -321,34 +321,34 @@ namespace opt {
         }
     }
 
-    void rmsprop_update(la::matrix_like<double>& theta,
-        la::matrix_like<double> const& loss_grad,
-        la::matrix_like<double>& accu_grad_sq,
+    void rmsprop_update(la::cpu::matrix_like<double>& theta,
+        la::cpu::matrix_like<double> const& loss_grad,
+        la::cpu::matrix_like<double>& accu_grad_sq,
         double decay,
         double step_size)
     {
-        la::weak_vector<double> theta_vec = theta.as_vector();
-        la::weak_vector<double> accu_grad_sq_vec = accu_grad_sq.as_vector();
+        la::cpu::weak_vector<double> theta_vec = theta.as_vector();
+        la::cpu::weak_vector<double> accu_grad_sq_vec = accu_grad_sq.as_vector();
 
         rmsprop_update(theta_vec, loss_grad.as_vector(), accu_grad_sq_vec, decay, step_size);
     }
 
-    void rmsprop_update(la::tensor_like<double>& theta,
-        la::tensor_like<double> const& loss_grad,
-        la::tensor_like<double>& accu_grad_sq,
+    void rmsprop_update(la::cpu::tensor_like<double>& theta,
+        la::cpu::tensor_like<double> const& loss_grad,
+        la::cpu::tensor_like<double>& accu_grad_sq,
         double decay,
         double step_size)
     {
-        la::weak_vector<double> theta_vec = theta.as_vector();
-        la::weak_vector<double> accu_grad_sq_vec = accu_grad_sq.as_vector();
+        la::cpu::weak_vector<double> theta_vec = theta.as_vector();
+        la::cpu::weak_vector<double> accu_grad_sq_vec = accu_grad_sq.as_vector();
 
         rmsprop_update(theta_vec, loss_grad.as_vector(), accu_grad_sq_vec, decay, step_size);
     }
 
-    void adam_update(la::vector_like<double>& theta,
-        la::vector_like<double> const& loss_grad,
-        la::vector_like<double>& first_moment,
-        la::vector_like<double>& second_moment,
+    void adam_update(la::cpu::vector_like<double>& theta,
+        la::cpu::vector_like<double> const& loss_grad,
+        la::cpu::vector_like<double>& first_moment,
+        la::cpu::vector_like<double>& second_moment,
         int& time, double alpha, double beta1, double beta2)
     {
         int size = theta.size();
@@ -378,29 +378,29 @@ namespace opt {
         ++time;
     }
 
-    void adam_update(la::matrix_like<double>& theta,
-        la::matrix_like<double> const& loss_grad,
-        la::matrix_like<double>& first_moment,
-        la::matrix_like<double>& second_moment,
+    void adam_update(la::cpu::matrix_like<double>& theta,
+        la::cpu::matrix_like<double> const& loss_grad,
+        la::cpu::matrix_like<double>& first_moment,
+        la::cpu::matrix_like<double>& second_moment,
         int& time, double alpha, double beta1, double beta2)
     {
-        la::weak_vector<double> theta_vec = theta.as_vector();
-        la::weak_vector<double> first_moment_vec = first_moment.as_vector();
-        la::weak_vector<double> second_moment_vec = second_moment.as_vector();
+        la::cpu::weak_vector<double> theta_vec = theta.as_vector();
+        la::cpu::weak_vector<double> first_moment_vec = first_moment.as_vector();
+        la::cpu::weak_vector<double> second_moment_vec = second_moment.as_vector();
 
         adam_update(theta_vec, loss_grad.as_vector(), first_moment_vec, second_moment_vec,
             time, alpha, beta1, beta2);
     }
 
-    void adam_update(la::tensor_like<double>& theta,
-        la::tensor_like<double> const& loss_grad,
-        la::tensor_like<double>& first_moment,
-        la::tensor_like<double>& second_moment,
+    void adam_update(la::cpu::tensor_like<double>& theta,
+        la::cpu::tensor_like<double> const& loss_grad,
+        la::cpu::tensor_like<double>& first_moment,
+        la::cpu::tensor_like<double>& second_moment,
         int& time, double alpha, double beta1, double beta2)
     {
-        la::weak_vector<double> theta_vec = theta.as_vector();
-        la::weak_vector<double> first_moment_vec = first_moment.as_vector();
-        la::weak_vector<double> second_moment_vec = second_moment.as_vector();
+        la::cpu::weak_vector<double> theta_vec = theta.as_vector();
+        la::cpu::weak_vector<double> first_moment_vec = first_moment.as_vector();
+        la::cpu::weak_vector<double> second_moment_vec = second_moment.as_vector();
 
         adam_update(theta_vec, loss_grad.as_vector(), first_moment_vec, second_moment_vec,
             time, alpha, beta1, beta2);

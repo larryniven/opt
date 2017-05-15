@@ -2,7 +2,7 @@
 #define OPT_H
 
 #include "ebt/ebt.h"
-#include "la/la.h"
+#include "la/la-cpu.h"
 
 namespace opt {
 
@@ -18,16 +18,16 @@ namespace opt {
         std::vector<std::vector<double>> const& grad,
         double step_size);
 
-    void const_step_update(la::vector_like<double>& theta,
-        la::vector_like<double> const& grad,
+    void const_step_update(la::cpu::vector_like<double>& theta,
+        la::cpu::vector_like<double> const& grad,
         double step_size);
 
-    void const_step_update(la::matrix_like<double>& theta,
-        la::matrix_like<double> const& grad,
+    void const_step_update(la::cpu::matrix_like<double>& theta,
+        la::cpu::matrix_like<double> const& grad,
         double step_size);
 
-    void const_step_update(la::tensor_like<double>& theta,
-        la::tensor_like<double> const& grad,
+    void const_step_update(la::cpu::tensor_like<double>& theta,
+        la::cpu::tensor_like<double> const& grad,
         double step_size);
 
     void const_step_update_momentum(ebt::SparseVector& theta,
@@ -48,21 +48,21 @@ namespace opt {
         double momentum,
         double step_size);
 
-    void const_step_update_momentum(la::vector_like<double>& theta,
-        la::vector_like<double> const& grad,
-        la::vector_like<double>& update,
+    void const_step_update_momentum(la::cpu::vector_like<double>& theta,
+        la::cpu::vector_like<double> const& grad,
+        la::cpu::vector_like<double>& update,
         double momentum,
         double step_size);
 
-    void const_step_update_momentum(la::matrix_like<double>& theta,
-        la::matrix_like<double> const& grad,
-        la::matrix_like<double>& update,
+    void const_step_update_momentum(la::cpu::matrix_like<double>& theta,
+        la::cpu::matrix_like<double> const& grad,
+        la::cpu::matrix_like<double>& update,
         double momentum,
         double step_size);
 
-    void const_step_update_momentum(la::tensor_like<double>& theta,
-        la::tensor_like<double> const& grad,
-        la::tensor_like<double>& update,
+    void const_step_update_momentum(la::cpu::tensor_like<double>& theta,
+        la::cpu::tensor_like<double> const& grad,
+        la::cpu::tensor_like<double>& update,
         double momentum,
         double step_size);
 
@@ -79,19 +79,19 @@ namespace opt {
         ebt::SparseVector& accu_grad_sq,
         double step_size);
 
-    void adagrad_update(la::vector_like<double>& theta,
-        la::vector_like<double> const& loss_grad,
-        la::vector_like<double>& accu_grad_sq,
+    void adagrad_update(la::cpu::vector_like<double>& theta,
+        la::cpu::vector_like<double> const& loss_grad,
+        la::cpu::vector_like<double>& accu_grad_sq,
         double step_size);
 
-    void adagrad_update(la::matrix_like<double>& theta,
-        la::matrix_like<double> const& loss_grad,
-        la::matrix_like<double>& accu_grad_sq,
+    void adagrad_update(la::cpu::matrix_like<double>& theta,
+        la::cpu::matrix_like<double> const& loss_grad,
+        la::cpu::matrix_like<double>& accu_grad_sq,
         double step_size);
 
-    void adagrad_update(la::tensor_like<double>& theta,
-        la::tensor_like<double> const& loss_grad,
-        la::tensor_like<double>& accu_grad_sq,
+    void adagrad_update(la::cpu::tensor_like<double>& theta,
+        la::cpu::tensor_like<double> const& loss_grad,
+        la::cpu::tensor_like<double>& accu_grad_sq,
         double step_size);
 
     void adagrad_update(std::vector<double>& theta,
@@ -114,40 +114,40 @@ namespace opt {
         std::vector<std::vector<float>>& accu_grad_sq,
         float step_size);
 
-    void rmsprop_update(la::vector_like<double>& theta,
-        la::vector_like<double> const& loss_grad,
-        la::vector_like<double>& accu_grad_sq,
+    void rmsprop_update(la::cpu::vector_like<double>& theta,
+        la::cpu::vector_like<double> const& loss_grad,
+        la::cpu::vector_like<double>& accu_grad_sq,
         double decay,
         double step_size);
 
-    void rmsprop_update(la::matrix_like<double>& theta,
-        la::matrix_like<double> const& loss_grad,
-        la::matrix_like<double>& accu_grad_sq,
+    void rmsprop_update(la::cpu::matrix_like<double>& theta,
+        la::cpu::matrix_like<double> const& loss_grad,
+        la::cpu::matrix_like<double>& accu_grad_sq,
         double decay,
         double step_size);
 
-    void rmsprop_update(la::tensor_like<double>& theta,
-        la::tensor_like<double> const& loss_grad,
-        la::tensor_like<double>& accu_grad_sq,
+    void rmsprop_update(la::cpu::tensor_like<double>& theta,
+        la::cpu::tensor_like<double> const& loss_grad,
+        la::cpu::tensor_like<double>& accu_grad_sq,
         double decay,
         double step_size);
 
-    void adam_update(la::vector_like<double>& theta,
-        la::vector_like<double> const& loss_grad,
-        la::vector_like<double>& first_moment,
-        la::vector_like<double>& second_moment,
+    void adam_update(la::cpu::vector_like<double>& theta,
+        la::cpu::vector_like<double> const& loss_grad,
+        la::cpu::vector_like<double>& first_moment,
+        la::cpu::vector_like<double>& second_moment,
         int& time, double alpha, double beta1, double beta2);
 
-    void adam_update(la::matrix_like<double>& theta,
-        la::matrix_like<double> const& loss_grad,
-        la::matrix_like<double>& first_moment,
-        la::matrix_like<double>& second_moment,
+    void adam_update(la::cpu::matrix_like<double>& theta,
+        la::cpu::matrix_like<double> const& loss_grad,
+        la::cpu::matrix_like<double>& first_moment,
+        la::cpu::matrix_like<double>& second_moment,
         int& time, double alpha, double beta1, double beta2);
 
-    void adam_update(la::tensor_like<double>& theta,
-        la::tensor_like<double> const& loss_grad,
-        la::tensor_like<double>& first_moment,
-        la::tensor_like<double>& second_moment,
+    void adam_update(la::cpu::tensor_like<double>& theta,
+        la::cpu::tensor_like<double> const& loss_grad,
+        la::cpu::tensor_like<double>& first_moment,
+        la::cpu::tensor_like<double>& second_moment,
         int& time, double alpha, double beta1, double beta2);
 
 }
