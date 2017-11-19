@@ -109,7 +109,7 @@ namespace opt {
         double momentum,
         double step_size)
     {
-        la::cpu::imul(update, momentum);
+        la::cpu::axpy(update, momentum, update);
         la::cpu::axpy(update, 1 - momentum, grad);
         la::cpu::axpy(theta, -step_size, update);
     }
