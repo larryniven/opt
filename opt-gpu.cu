@@ -1,4 +1,5 @@
 #include "opt/opt-gpu.h"
+#include "opt/opt.h"
 #include <thrust/device_ptr.h>
 #include <thrust/for_each.h>
 #include <cuda_runtime.h>
@@ -7,32 +8,17 @@ namespace opt {
 
     namespace gpu {
 
-        struct iconst_step_update_op {
-            double step_size;
-
-            template <class T>
-            __host__ __device__
-            void operator()(T t) const
-            {
-                auto& theta = thrust::get<0>(t);
-                auto& loss_grad = thrust::get<1>(t);
-
-                theta -= step_size * loss_grad;
-            }
-        };
-
         void const_step_update(la::gpu::vector_like<double>& theta,
             la::gpu::vector_like<double> const& loss_grad,
             double step_size)
         {
-            thrust::for_each(
-                thrust::make_zip_iterator(thrust::make_tuple(
-                    thrust::device_ptr<double>(theta.begin()),
-                    thrust::device_ptr<double const>(loss_grad.begin()))),
-                thrust::make_zip_iterator(thrust::make_tuple(
-                    thrust::device_ptr<double>(theta.end()),
-                    thrust::device_ptr<double const>(loss_grad.end()))),
-                iconst_step_update_op { step_size });
+            // la::cpu::vector<double> htheta = la::gpu::to_host(theta);
+            // la::cpu::vector<double> hloss_grad = la::gpu::to_host(loss_grad);
+            // opt::const_step_update(htheta, hloss_grad, step_size);
+
+            // la::gpu::to_device(theta, htheta);
+
+            la::gpu::axpy(theta, -step_size, loss_grad);
         }
 
         void const_step_update(la::gpu::matrix_like<double>& theta,

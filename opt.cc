@@ -33,9 +33,7 @@ namespace opt {
         la::cpu::vector_like<double> const& grad,
         double step_size)
     {
-        for (int i = 0; i < theta.size(); ++i) {
-            theta(i) -= grad(i) * step_size;
-        }
+        la::cpu::axpy(theta, -step_size, grad);
     }
 
     void const_step_update(la::cpu::matrix_like<double>& theta,
@@ -109,7 +107,7 @@ namespace opt {
         double momentum,
         double step_size)
     {
-        la::cpu::axpy(update, momentum, update);
+        la::cpu::axpy(update, momentum - 1, update);
         la::cpu::axpy(update, 1 - momentum, grad);
         la::cpu::axpy(theta, -step_size, update);
     }
